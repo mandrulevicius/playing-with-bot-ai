@@ -1,0 +1,104 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://BotBodyScene.tscn" type="PackedScene" id=1]
+[ext_resource path="res://WorldScript.gd" type="Script" id=2]
+[ext_resource path="res://ResourceScene.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Camera2D.gd" type="Script" id=4]
+[ext_resource path="res://RootScript.gd" type="Script" id=5]
+[ext_resource path="res://ItemListScript.gd" type="Script" id=6]
+
+[node name="RootNode" type="Node"]
+pause_mode = 2
+script = ExtResource( 5 )
+
+[node name="World" type="Node" parent="."]
+pause_mode = 1
+script = ExtResource( 2 )
+
+[node name="Background" type="Node2D" parent="World"]
+
+[node name="Bot" parent="World" instance=ExtResource( 1 )]
+position = Vector2( -11.1605, -10.5979 )
+
+[node name="Resource" parent="World" instance=ExtResource( 3 )]
+position = Vector2( 263.542, 156.535 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 153.923
+margin_top = 388.262
+margin_right = 479.923
+margin_bottom = 436.262
+text = "Vision:
+Area2D or raycasting (for obstacles)?
+Start with Area2D, will change to raycast if required"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 147.154
+margin_top = 466.54
+margin_right = 687.154
+margin_bottom = 616.54
+text = "Objectives/Goals:
++Explore
++Gather resources
++Build new bots
+
++Go through visibility list - if any objects resources, go to nearest one.
++Go through personal space list-  if any objects bots, avoid collision.
+
+Follow parent - if parent bot in visibility list, follow at a distance while keeping vision"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+script = ExtResource( 4 )
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="OverlayName" type="Label" parent="GUI"]
+margin_left = 25.9739
+margin_top = 7.66476
+margin_right = 142.974
+margin_bottom = 47.6648
+text = "Info Overlay"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InfoOverlay" type="Control" parent="GUI"]
+margin_right = 1024.0
+margin_bottom = 600.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="GUI/InfoOverlay"]
+margin_left = 7.0
+margin_top = 46.0
+margin_right = 83.0
+margin_bottom = 269.0
+items = [ "Item 0", null, false ]
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Inspiration" type="Label" parent="."]
+margin_left = -356.891
+margin_top = 75.5976
+margin_right = 2661.11
+margin_bottom = 157.598
+text = "“Anyway, you take a set of very simple rules, but when you put them together, you get deep, complex strategy. You can learn the rules of shogi in ten minutes. You can spend a lifetime getting good at it.”
+
+
+emergent behaviour. An elite clone user, Naruto knew from his reading, would emphasise high levels of basic abilities like dodging and taijutsu, and then program the clone to scan the situation for ways to combine them as effectively as possible. 
+If an ordinary clone was a shogi player, with a list of move sequences and an algorithm telling it which one to apply at any given time, then a master’s clone was a martial artist constantly looking for openings and opportunities.
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="item_selected" from="GUI/InfoOverlay/ItemList" to="GUI/InfoOverlay/ItemList" method="_on_ItemList_item_selected"]
